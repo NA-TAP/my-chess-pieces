@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Baby Chess 🐴</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;800&family=Nunito:wght@400;600;700&display=swap');
+
+  :root {
+    --light-sq: #f9e4b7;
+    --dark-sq: #c8a96e;
+    --board-border: #8b6914;
+    --bg: #fff8ee;
+    --accent: #ff9f43;
+    --accent2: #ff6b9d;
+    --text: #4a3000;
+    --white-piece: #ffffff;
+    --black-piece: #2c1a00;
+    --highlight: rgba(255,200,0,0.5);
+    --valid-move: rgba(100,200,100,0.5);
+    --danger: rgba(255,80,80,0.5);
+    --tour-visited: rgba(150,220,255,0.4);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    font-family: 'Nunito', sans-serif;
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-image: radial-gradient(circle at 20% 20%, #ffe0a0 0%, transparent 50%),
+                      radial-gradient(circle at 80% 80%, #ffd0e0 0%, transparent 50%);
+  }
+
+  h1 {
+    font-family: 'Baloo 2', cursive;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--accent);
+    text-shadow: 3px 3px 0 var(--accent2);
+    margin-bottom: 5px;
+    letter-spacing: -1px;
+  }
+
+  .subtitle {
+    font-size: 0.9rem;
+    color: #888;
+    margin-bottom: 20px;
+    font-style: italic;
+  }
+
+  .game-container {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .board-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .board {
+    display: grid;
+    grid-template-columns: repeat(6, 80px);
+    grid-template-rows: repeat(6, 80px);
+    border: 4px solid var(--board-border);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+
+  .square {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.15s;
+    font-size: 48px;
+    user-select: none;
+  }
+
+  .square.light { background: var(--light-sq); }
+  .square.dark { background: var(--dark-sq); }
+  .square.highlighted { background: var(--highlight) !important; }
+  .square.valid-move::after {
+    content: '';
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    background: var(--valid-move);
+    border-radius: 50%;
+    border: 3px solid rgba(0,150,0,0.4);
+  }
+  .square.valid-capture::after {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border-radius: 4px;
+    border: 4px solid rgba(255,80,80,0.6);
+  }
+  .square.tour-visited { background: var(--tour-visited) !important; }
+  .square.royal-square {
+    background: repeating-linear-gradient(
+      45deg,
+      #ffd700 0px, #ffd700 4px,
+      #fff8ee 4px, #fff8ee 8px
+    ) !important;
+    cursor: not-allowed;
+  }
+
+  .piece {
+    font-size: 42px;
+    line-height: 1;
+    position: relative;
+    z-index: 1;
+    filter: drop-shadow(1px 2px 2px rgba(0,0,0,0.3));
+    transition: transform 0.1s;
+  }
+
+  .piece:hover { transform: scale(1.1); }
+
+  .piece.white { filter: drop-shadow(0 0 3px rgba(0,0,0,0.5)) drop-shadow(1px 2px 2px rgba(0,0,0,0.3)); }
+
+  /* Crying animation */
+  @keyframes cry {
+    0% { transform: scale(1) rotate(0deg); }
+    25% { transform: scale(1.2) rotate(-5deg); }
+    50% { transform: scale(0.8) rotate(5deg); }
+    75% { transform: scale(1.1) rotate(-3deg); }
+    100% { transform: scale(0) rotate(0deg); opacity: 0; }
+  }
+
+  @keyframes tear {
+    0% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(30px); }
+  }
+
+  .crying {
+    animation: cry 0.8s forwards;
+  }
+
+  .tear {
+    position: absolute;
+    font-size: 16px;
+    pointer-events: none;
+    animation: tear 0.8s forwards;
+    z-index: 10;
+  }
+
+  /* Side panel */
+  .panel {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    width: 220px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    border: 2px solid #ffe0b0;
+  }
+
+  .panel h2 {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.2rem;
+    color: var(--accent);
+    margin-bottom: 12px;
+    border-bottom: 2px dashed #ffe0b0;
+    padding-bottom: 8px;
+  }
+
+  .player-section {
+    margin-bottom: 16px;
+    padding: 12px;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    transition: all 0.3s;
+  }
+
+  .player-section.active {
+    border-color: var(--accent);
+    background: #fff8ee;
+  }
+
+  .player-name {
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .foal-count {
+    font-size: 0.85rem;
+    color: #888;
+    margin-bottom: 6px;
+  }
+
+  .tour-progress {
+    background: #f0f0f0;
+    border-radius: 20px;
+    height: 8px;
+    overflow: hidden;
+    margin-top: 4px;
+  }
+
+  .tour-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 20px;
+    transition: width 0.3s;
+  }
+
+  .pocket {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+    padding: 8px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    font-size: 0.85rem;
+  }
+
+  .pocket-piece {
+    font-size: 28px;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+
+  .pocket-piece:hover { transform: scale(1.2); }
+  .pocket-piece.selected { filter: drop-shadow(0 0 6px var(--accent)); transform: scale(1.2); }
+  .pocket-piece.used { opacity: 0.3; cursor: not-allowed; }
+
+  .status-box {
+    background: linear-gradient(135deg, #fff8ee, #ffe8f0);
+    border: 2px solid var(--accent);
+    border-radius: 12px;
+    padding: 12px;
+    margin-top: 16px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .btn {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-family: 'Baloo 2', cursive;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 12px;
+    transition: transform 0.1s, box-shadow 0.1s;
+    box-shadow: 0 4px 12px rgba(255,159,67,0.3);
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(255,159,67,0.4);
+  }
+
+  .btn:active { transform: translateY(0); }
+
+  .legend {
+    margin-top: 16px;
+    font-size: 0.75rem;
+    color: #999;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 4px;
+  }
+
+  .legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .win-screen {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .win-screen.show { display: flex; }
+
+  .win-card {
+    background: white;
+    border-radius: 24px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  @keyframes popIn {
+    from { transform: scale(0.5); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .win-emoji { font-size: 4rem; margin-bottom: 12px; }
+
+  .win-title {
+    font-family: 'Baloo 2', cursive;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .win-subtitle { color: #888; margin-bottom: 24px; }
+
+  .coord {
+    position: absolute;
+    font-size: 9px;
+    color: rgba(100,60,0,0.4);
+    font-weight: 600;
+  }
+  .coord.file { bottom: 2px; right: 4px; }
+  .coord.rank { top: 2px; left: 3px; }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  .floating { animation: float 2s ease-in-out infinite; }
+</style>
+</head>
+<body>
+
+<h1>🐴 Baby Chess 🐴</h1>
+<p class="subtitle">the foals will always be baby • complete the tour to win</p>
+
+<div class="game-container">
+  <div class="board-wrap">
+    <div class="board" id="board"></div>
+    <div style="margin-top:12px; font-size:0.8rem; color:#aaa; text-align:center;">
+      Click a piece to select • Click a dot to move • Click pocket foal to deploy
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>⚪ White</h2>
+    <div class="player-section" id="white-section">
+      <div class="player-name">🐴 Foals on board: <span id="white-foal-count">2</span></div>
+      <div class="foal-count">Tour progress: <span id="white-tour-count">0</span>/32</div>
+      <div class="tour-progress"><div class="tour-bar" id="white-tour-bar" style="width:0%"></div></div>
+      <div class="pocket">
+        🎒 Pocket:
+        <img src="wFOAL.svg" class="pocket-piece" id="white-pocket" title="Click to select pocket foal" style="width:36px;height:36px;cursor:pointer;">
+      </div>
+    </div>
+
+    <h2>⚫ Black</h2>
+    <div class="player-section" id="black-section">
+      <div class="player-name">🐴 Foals on board: <span id="black-foal-count">2</span></div>
+      <div class="foal-count">Tour progress: <span id="black-tour-count">0</span>/32</div>
+      <div class="tour-progress"><div class="tour-bar" id="black-tour-bar" style="width:0%"></div></div>
+      <div class="pocket">
+        🎒 Pocket:
+        <img src="bFOAL.svg" class="pocket-piece" id="black-pocket" title="Click to select pocket foal" style="width:36px;height:36px;cursor:pointer;">
+      </div>
+    </div>
+
+    <div class="status-box" id="status">White's turn! 🐴</div>
+
+    <button class="btn" onclick="resetGame()">🔄 New Game</button>
+    <button class="btn" onclick="toggleTour()" style="background:linear-gradient(135deg,#74b9ff,#a29bfe); margin-top:8px;">
+      👁️ Show Tour Squares
+    </button>
+
+    <div class="legend">
+      <div class="legend-item">
+        <div class="legend-dot" style="background:var(--highlight)"></div>
+        Selected piece
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:var(--valid-move)"></div>
+        Valid move
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:var(--danger)"></div>
+        Capture
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:var(--tour-visited); border:1px solid #aaa"></div>
+        Tour visited
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:repeating-linear-gradient(45deg,#ffd700 0px,#ffd700 3px,#fff 3px,#fff 6px)"></div>
+        Royal square (ignored)
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Win screen -->
+<div class="win-screen" id="win-screen">
+  <div class="win-card">
+    <div class="win-emoji floating" id="win-emoji">🐴</div>
+    <div class="win-title" id="win-title">White wins!</div>
+    <div class="win-subtitle" id="win-subtitle">The foals completed their tour!</div>
+    <button class="btn" onclick="resetGame(); document.getElementById('win-screen').classList.remove('show')">
+      🔄 Play Again
+    </button>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// BABY CHESS ENGINE
+// ============================================================
+
+const EMPTY = null;
+const FILES = ['a','b','c','d','e','f'];
+const RANKS = ['6','5','4','3','2','1'];
+
+// Piece types
+const KING = 'king';
+const QUEEN = 'queen';
+const ROOK = 'rook';
+const FOAL = 'foal';
+const PAWN = 'pawn';
+
+// Piece image filenames
+function getPieceImg(color, type) {
+  const map = {
+    white: { king:'IMMOBILE', queen:'IMMOBILE', rook:'wROOK', foal:'wFOAL', pawn:'wBABY' },
+    black: { king:'IMMOBILE', queen:'IMMOBILE', rook:'bROOK', foal:'bFOAL', pawn:'bBABY' },
+  };
+  return map[color][type] + '.svg';
+}
+
+// CSS filters for white vs black pieces
+// White pieces get a light filter, black pieces get dark
+const PIECE_STYLE = {
+  white: 'filter:brightness(1.1) drop-shadow(0 2px 4px rgba(0,0,0,0.4))',
+  black: 'filter:brightness(0.3) drop-shadow(0 2px 4px rgba(0,0,0,0.6)) sepia(1) hue-rotate(180deg)'
+};
+
+let board = [];
+let currentTurn = 'white';
+let selected = null; // {row, col} or {pocket: color}
+let validMoves = [];
+let showTour = false;
+
+// Track visited squares per color foal tour
+// Using combined set for both foals of same color
+let tourVisited = { white: new Set(), black: new Set() };
+
+// Pocket foals: true = available, false = used
+let pocket = { white: true, black: true };
+
+// Foal counts
+let foalCount = { white: 2, black: 2 };
+
+// Royal squares (King and Queen positions) — excluded from tour
+let royalSquares = new Set();
+
+function initBoard() {
+  // 6x6 board
+  // Row 0 = rank 6 (black back rank)
+  // Row 5 = rank 1 (white back rank)
+  board = Array(6).fill(null).map(() => Array(6).fill(null));
+
+  // Black pieces (row 0): Rook, Foal, Queen, King, Foal, Rook
+  board[0][0] = { color: 'black', type: ROOK };
+  board[0][1] = { color: 'black', type: FOAL };
+  board[0][2] = { color: 'black', type: QUEEN };
+  board[0][3] = { color: 'black', type: KING };
+  board[0][4] = { color: 'black', type: FOAL };
+  board[0][5] = { color: 'black', type: ROOK };
+
+  // Black pawns (row 1)
+  for (let c = 0; c < 6; c++) board[1][c] = { color: 'black', type: PAWN };
+
+  // White pawns (row 4)
+  for (let c = 0; c < 6; c++) board[4][c] = { color: 'white', type: PAWN };
+
+  // White pieces (row 5): Rook, Foal, Queen, King, Foal, Rook
+  board[5][0] = { color: 'white', type: ROOK };
+  board[5][1] = { color: 'white', type: FOAL };
+  board[5][2] = { color: 'white', type: QUEEN };
+  board[5][3] = { color: 'white', type: KING };
+  board[5][4] = { color: 'white', type: FOAL };
+  board[5][5] = { color: 'white', type: ROOK };
+
+  // Update royal squares
+  updateRoyalSquares();
+
+  // Reset state
+  tourVisited = { white: new Set(), black: new Set() };
+  pocket = { white: true, black: true };
+  foalCount = { white: 2, black: 2 };
+  currentTurn = 'white';
+  selected = null;
+  validMoves = [];
+}
+
+function updateRoyalSquares() {
+  royalSquares = new Set();
+  for (let r = 0; r < 6; r++) {
+    for (let c = 0; c < 6; c++) {
+      const p = board[r][c];
+      if (p && (p.type === KING || p.type === QUEEN)) {
+        royalSquares.add(`${r},${c}`);
+      }
+    }
+  }
+}
+
+function isRoyal(r, c) {
+  return royalSquares.has(`${r},${c}`);
+}
+
+// Xiangqi knight moves (lame leaper)
+// From (r,c), move one step orthogonally then one diagonally outward
+// Can be blocked on the orthogonal step
+function getXiangqiKnightMoves(r, c, color) {
+  const moves = [];
+  const directions = [
+    { step: [-1,0], legs: [[-2,-1],[-2,1]] }, // up then diagonal
+    { step: [1,0],  legs: [[2,-1],[2,1]]   }, // down then diagonal
+    { step: [0,-1], legs: [[-1,-2],[1,-2]] }, // left then diagonal
+    { step: [0,1],  legs: [[-1,2],[1,2]]   }, // right then diagonal
+  ];
+
+  for (const dir of directions) {
+    const br = r + dir.step[0];
+    const bc = c + dir.step[1];
+    // Check if blocking square is empty (in bounds)
+    if (br < 0 || br >= 6 || bc < 0 || bc >= 6) continue;
+    if (board[br][bc] !== null) continue; // blocked!
+
+    for (const leg of dir.legs) {
+      const tr = r + leg[0];
+      const tc = r + leg[1]; // bug fix below
+      const fr = r + leg[0];
+      const fc = c + leg[1];
+      if (fr < 0 || fr >= 6 || fc < 0 || fc >= 6) continue;
+      const target = board[fr][fc];
+      if (target === null || target.color !== color) {
+        moves.push({ row: fr, col: fc, capture: target !== null });
+      }
+    }
+  }
+  return moves;
+}
+
+// Actually let's use a cleaner xiangqi knight implementation
+function getXiangqiMoves(r, c, color) {
+  const moves = [];
+  // All 8 possible knight destinations with their blocking squares
+  const knightMoves = [
+    { dest: [r-2, c-1], block: [r-1, c] },
+    { dest: [r-2, c+1], block: [r-1, c] },
+    { dest: [r+2, c-1], block: [r+1, c] },
+    { dest: [r+2, c+1], block: [r+1, c] },
+    { dest: [r-1, c-2], block: [r, c-1] },
+    { dest: [r+1, c-2], block: [r, c-1] },
+    { dest: [r-1, c+2], block: [r, c+1] },
+    { dest: [r+1, c+2], block: [r, c+1] },
+  ];
+
+  for (const km of knightMoves) {
+    const [dr, dc] = km.dest;
+    const [br, bc] = km.block;
+    if (dr < 0 || dr >= 6 || dc < 0 || dc >= 6) continue;
+    if (br < 0 || br >= 6 || bc < 0 || bc >= 6) continue;
+    if (board[br][bc] !== null) continue; // blocked
+    const target = board[dr][dc];
+    // Can't land on own piece, can't land on royals (their squares are excluded from tour but can still be moved through)
+    if (target === null || target.color !== color) {
+      // Can't capture royals (they're immobile and sacred 😂)
+      if (target && (target.type === KING || target.type === QUEEN)) continue;
+      moves.push({ row: dr, col: dc, capture: target !== null });
+    }
+  }
+  return moves;
+}
+
+function getRookMoves(r, c, color) {
+  const moves = [];
+  const dirs = [[-1,0],[1,0],[0,-1],[0,1]];
+  for (const [dr, dc] of dirs) {
+    let nr = r + dr, nc = c + dc;
+    while (nr >= 0 && nr < 6 && nc >= 0 && nc < 6) {
+      const target = board[nr][nc];
+      if (target === null) {
+        moves.push({ row: nr, col: nc, capture: false });
+      } else {
+        if (target.color !== color && target.type !== KING && target.type !== QUEEN) {
+          moves.push({ row: nr, col: nc, capture: true });
+        }
+        break;
+      }
+      nr += dr; nc += dc;
+    }
+  }
+  return moves;
+}
+
+function getPawnMoves(r, c, color) {
+  const moves = [];
+  const dir = color === 'white' ? -1 : 1;
+  const nr = r + dir;
+  if (nr >= 0 && nr < 6 && board[nr][c] === null) {
+    moves.push({ row: nr, col: c, capture: false });
+  }
+  // Diagonal captures
+  for (const dc of [-1, 1]) {
+    const nc = c + dc;
+    if (nr >= 0 && nr < 6 && nc >= 0 && nc < 6) {
+      const target = board[nr][nc];
+      if (target && target.color !== color && target.type !== KING && target.type !== QUEEN) {
+        moves.push({ row: nr, col: nc, capture: true });
+      }
+    }
+  }
+  return moves;
+}
+
+function getValidMoves(r, c) {
+  const piece = board[r][c];
+  if (!piece) return [];
+  switch (piece.type) {
+    case FOAL: return getXiangqiMoves(r, c, piece.color);
+    case ROOK: return getRookMoves(r, c, piece.color);
+    case PAWN: return getPawnMoves(r, c, piece.color);
+    case KING: case QUEEN: return []; // immobile! too spoiled 😂
+    default: return [];
+  }
+}
+
+function getPocketDropMoves(color) {
+  // Can drop pocket foal on any empty non-royal square
+  const moves = [];
+  for (let r = 0; r < 6; r++) {
+    for (let c = 0; c < 6; c++) {
+      if (board[r][c] === null && !isRoyal(r, c)) {
+        moves.push({ row: r, col: c, capture: false });
+      }
+    }
+  }
+  return moves;
+}
+
+function markTourSquare(r, c, color) {
+  if (!isRoyal(r, c)) {
+    tourVisited[color].add(`${r},${c}`);
+  }
+}
+
+function checkWin() {
+  // Win by tour: visited all 32 non-royal squares
+  for (const color of ['white', 'black']) {
+    if (tourVisited[color].size >= 32) {
+      showWin(color, 'tour');
+      return true;
+    }
+  }
+
+  // Win by capturing both enemy foals
+  for (const color of ['white', 'black']) {
+    if (foalCount[color] === 0 && !pocket[color]) {
+      const enemy = color === 'white' ? 'black' : 'white';
+      showWin(enemy, 'capture');
+      return true;
+    }
+  }
+  return false;
+}
+
+function showWin(color, reason) {
+  const screen = document.getElementById('win-screen');
+  const emoji = document.getElementById('win-emoji');
+  const title = document.getElementById('win-title');
+  const sub = document.getElementById('win-subtitle');
+
+  emoji.textContent = reason === 'tour' ? '🏆' : '😈';
+  title.textContent = `${color.charAt(0).toUpperCase() + color.slice(1)} wins!`;
+  sub.textContent = reason === 'tour'
+    ? '🐴 The foals completed their tour! 🐴'
+    : '😢 Both enemy foals were captured!';
+  screen.classList.add('show');
+}
+
+function spawnTears(squareEl) {
+  for (let i = 0; i < 3; i++) {
+    const tear = document.createElement('span');
+    tear.className = 'tear';
+    tear.textContent = '💧';
+    tear.style.left = (20 + Math.random() * 40) + 'px';
+    tear.style.top = (20 + Math.random() * 20) + 'px';
+    squareEl.appendChild(tear);
+    setTimeout(() => tear.remove(), 900);
+  }
+}
+
+function handleSquareClick(r, c) {
+  const piece = board[r][c];
+  const squareEl = document.querySelector(`[data-r="${r}"][data-c="${c}"]`);
+
+  // If pocket foal selected, try to drop
+  if (selected && selected.pocket) {
+    const dropColor = selected.pocket;
+    if (dropColor === currentTurn && pocket[dropColor]) {
+      const isValid = validMoves.some(m => m.row === r && m.col === c);
+      if (isValid) {
+        board[r][c] = { color: dropColor, type: FOAL };
+        pocket[dropColor] = false;
+        foalCount[dropColor]++;
+        markTourSquare(r, c, dropColor);
+        selected = null;
+        validMoves = [];
+        endTurn();
+        return;
+      }
+    }
+    selected = null;
+    validMoves = [];
+    renderBoard();
+    return;
+  }
+
+  // If a piece is selected, try to move
+  if (selected) {
+    const isValid = validMoves.some(m => m.row === r && m.col === c);
+    if (isValid) {
+      const movingPiece = board[selected.row][selected.col];
+      const targetPiece = board[r][c];
+
+      // Capture with crying 😢
+      if (targetPiece) {
+        squareEl.querySelector('.piece')?.classList.add('crying');
+        spawnTears(squareEl);
+        if (targetPiece.type === FOAL) {
+          foalCount[targetPiece.color]--;
+        }
+      }
+
+      // Move
+      board[r][c] = movingPiece;
+      board[selected.row][selected.col] = null;
+
+      // Track tour for foals
+      if (movingPiece.type === FOAL) {
+        markTourSquare(r, c, movingPiece.color);
+      }
+
+      updateRoyalSquares();
+      selected = null;
+      validMoves = [];
+
+      setTimeout(() => {
+        if (!checkWin()) endTurn();
+      }, targetPiece ? 850 : 0);
+      renderBoard();
+      return;
+    }
+
+    // Clicked on own piece — reselect
+    selected = null;
+    validMoves = [];
+  }
+
+  // Select piece
+  if (piece && piece.color === currentTurn) {
+    if (piece.type === KING || piece.type === QUEEN) {
+      setStatus(`The ${piece.type === KING ? 'Young Prince' : 'Young Princess'} is too spoiled to move! 👑`);
+      return;
+    }
+    selected = { row: r, col: c };
+    validMoves = getValidMoves(r, c);
+    renderBoard();
+  }
+}
+
+function handlePocketClick(color) {
+  if (color !== currentTurn) return;
+  if (!pocket[color]) return;
+
+  if (selected && selected.pocket === color) {
+    // Deselect
+    selected = null;
+    validMoves = [];
+  } else {
+    selected = { pocket: color };
+    validMoves = getPocketDropMoves(color);
+  }
+  renderBoard();
+}
+
+function endTurn() {
+  currentTurn = currentTurn === 'white' ? 'black' : 'white';
+  updateStatus();
+  renderBoard();
+}
+
+function setStatus(msg) {
+  document.getElementById('status').innerHTML = msg;
+}
+
+function updateStatus() {
+  const color = currentTurn.charAt(0).toUpperCase() + currentTurn.slice(1);
+  setStatus(`${currentTurn === 'white' ? '⚪' : '⚫'} ${color}'s turn! 🐴`);
+  document.getElementById('white-section').classList.toggle('active', currentTurn === 'white');
+  document.getElementById('black-section').classList.toggle('active', currentTurn === 'black');
+
+  // Update tour counts
+  const wt = tourVisited.white.size;
+  const bt = tourVisited.black.size;
+  document.getElementById('white-tour-count').textContent = wt;
+  document.getElementById('black-tour-count').textContent = bt;
+  document.getElementById('white-tour-bar').style.width = (wt/32*100) + '%';
+  document.getElementById('black-tour-bar').style.width = (bt/32*100) + '%';
+  document.getElementById('white-foal-count').textContent = foalCount.white;
+  document.getElementById('black-foal-count').textContent = foalCount.black;
+
+  // Pocket display
+  const wp = document.getElementById('white-pocket');
+  const bp = document.getElementById('black-pocket');
+  wp.className = 'pocket-piece' + (!pocket.white ? ' used' : '') + (selected?.pocket === 'white' ? ' selected' : '');
+  bp.className = 'pocket-piece' + (!pocket.black ? ' used' : '') + (selected?.pocket === 'black' ? ' selected' : '');
+}
+
+function toggleTour() {
+  showTour = !showTour;
+  renderBoard();
+}
+
+function renderBoard() {
+  const boardEl = document.getElementById('board');
+  boardEl.innerHTML = '';
+
+  for (let r = 0; r < 6; r++) {
+    for (let c = 0; c < 6; c++) {
+      const sq = document.createElement('div');
+      const isLight = (r + c) % 2 === 0;
+      sq.className = 'square ' + (isLight ? 'light' : 'dark');
+      sq.dataset.r = r;
+      sq.dataset.c = c;
+
+      // Coordinates
+      if (c === 0) {
+        const rank = document.createElement('span');
+        rank.className = 'coord rank';
+        rank.textContent = RANKS[r];
+        sq.appendChild(rank);
+      }
+      if (r === 5) {
+        const file = document.createElement('span');
+        file.className = 'coord file';
+        file.textContent = FILES[c];
+        sq.appendChild(file);
+      }
+
+      // Royal square styling
+      if (isRoyal(r, c)) sq.classList.add('royal-square');
+
+      // Tour visited
+      if (showTour && tourVisited[currentTurn].has(`${r},${c}`)) {
+        sq.classList.add('tour-visited');
+      }
+
+      // Selected
+      if (selected && !selected.pocket && selected.row === r && selected.col === c) {
+        sq.classList.add('highlighted');
+      }
+
+      // Valid moves
+      const isValid = validMoves.some(m => m.row === r && m.col === c);
+      if (isValid) {
+        const move = validMoves.find(m => m.row === r && m.col === c);
+        sq.classList.add(move.capture ? 'valid-capture' : 'valid-move');
+      }
+
+      // Piece
+      const piece = board[r][c];
+      if (piece) {
+        const pieceEl = document.createElement('img');
+        pieceEl.className = 'piece ' + piece.color;
+        pieceEl.src = getPieceImg(piece.color, piece.type);
+        pieceEl.alt = piece.color + ' ' + piece.type;
+        pieceEl.style.width = '64px';
+        pieceEl.style.height = '64px';
+        pieceEl.style.objectFit = 'contain';
+        pieceEl.style.pointerEvents = 'none';
+        sq.appendChild(pieceEl);
+      }
+
+      sq.addEventListener('click', () => handleSquareClick(r, c));
+      boardEl.appendChild(sq);
+    }
+  }
+
+  updateStatus();
+}
+
+function resetGame() {
+  initBoard();
+  renderBoard();
+  document.getElementById('win-screen').classList.remove('show');
+  setStatus("White's turn! 🐴");
+}
+
+// Pocket click handlers
+document.getElementById('white-pocket').addEventListener('click', () => handlePocketClick('white'));
+document.getElementById('black-pocket').addEventListener('click', () => handlePocketClick('black'));
+
+// Init
+initBoard();
+renderBoard();
+</script>
+</body>
+</html>
