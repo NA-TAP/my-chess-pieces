@@ -18,6 +18,7 @@ Made in Inkscape and MS Paint.
 ## Also includes
 Baby Chess — a 6x6 variant where the foals 
 will always be baby 🐴
+Maybe i'll include more.....
 
 
 ## license cc-by 4.0
