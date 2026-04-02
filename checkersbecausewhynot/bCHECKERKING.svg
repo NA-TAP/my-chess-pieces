@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="180"
+   height="180"
+   viewBox="0 0 180 180"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
+   sodipodi:docname="bCHECKERKING.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="true"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="px"
+     inkscape:zoom="4.6055556"
+     inkscape:cx="89.891435"
+     inkscape:cy="91.085645"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <circle
+       style="fill:#000000;stroke:#ffffff;stroke-width:3;stroke-dasharray:none"
+       id="path1"
+       cx="90"
+       cy="90"
+       r="72.303978" />
+    <path
+       d="M 84.087969,43.712282 V 52.18267 H 71.604942 v 10.253487 h 12.483027 v 10.1813 a 17.757237,22.586612 0 0 0 -11.813363,-5.72356 17.757237,22.586612 0 0 0 -17.75747,22.58681 17.757237,22.586612 0 0 0 17.236175,22.576113 v 24.2309 h 36.258119 v -23.04261 a 17.757237,22.586612 0 0 0 17.47143,-22.584132 17.757237,22.586612 0 0 0 -17.75748,-22.58681 17.757237,22.586612 0 0 0 -12.345344,6.35179 V 62.436157 H 106.67344 V 52.18267 H 95.380036 v -8.470388 z m 5.936088,45.149556 a 17.757237,22.586612 0 0 1 0.0067,0.61887 17.757237,22.586612 0 0 1 -0.0094,0.74318 17.757237,22.586612 0 0 1 -0.0147,0.44511 17.757237,22.586612 0 0 1 -0.03208,0.61085 17.757237,22.586612 0 0 1 -0.0067,-0.61085 17.757237,22.586612 0 0 1 0,-0.008 17.757237,22.586612 0 0 1 0.004,-0.43708 17.757237,22.586612 0 0 1 0.05213,-1.36205 z"
+       style="fill:#000000;stroke:#ffffff;stroke-width:2.0531"
+       id="path3" />
+    <path
+       style="fill:#000000;stroke:#ffffff;stroke-width:2.0531;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+       d="M 72.007042,112.69075 90.135769,90.847123 107.9673,114.17671"
+       id="path4" />
+  </g>
+</svg>

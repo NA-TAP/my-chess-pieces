@@ -1,0 +1,80 @@
+============================================
+CHESS PIECE SET TODO
+============================================
+
+PIECES DONE:
+✅ wKING / bKING (butt + cope lines)
+✅ wQUEEN / bQUEEN (spike trap)
+✅ wROOK / bROOK (the cool one)
+✅ wBISHOP / bBISHOP
+✅ wKNIGHT / bKNIGHT (obese patriarch)
+✅ wPAWN / bPAWN (three circles ⚫⚫⚫)
+✅ wARCHBISHOP / bARCHBISHOP
+✅ wCHANCELLOR / bCHANCELLOR
+✅ wAMAZON / bAMAZON (forest 🌳)
+✅ DUCKDUCK (legless, yellow, unbothered 🦆)
+✅ wELEPHANT / bELEPHANT (smiley car 🐘)
+✅ wCAMEL / bCAMEL
+✅ wGIRAFFE / bGIRAFFE (aggressively vertical)
+✅ wZEBRA / bZEBRA (striped)
+✅ wDRAGON / bDRAGON (actually cool 🐉)
+✅ wKNIGHTRIDER / bKNIGHTRIDER (two obese knights)
+✅ IMMOBILE (both kings AND queens, no color, too spoiled)
+✅ wCANNON / bCANNON
+✅ wGRASSHOPPER / bGRASSHOPPER
+
+PIECES TODO:
+⏳ wFOAL / bFOAL (Baby Chess — Xiangqi knight, forever baby 🥺)
+⏳ wBABY / bBABY (Baby Chess pawn — no double step, babies cant run)
+⏳ wCHECKER / bCHECKER (just a circle)
+⏳ wCHECKERKING / bCHECKERKING (circle + butt king slapped on top)
+⏳ wATAXX / bATAXX (🔴🔵 colored circles)
+⏳ EMPTYSET (∅ — The Concept™ department)
+⏳ wWILDEBEEST / bWILDEBEEST (GNU logo 🐃)
+⏳ wCROCODILE / bCROCODILE 🐊
+⏳ wFERZ / bFERZ
+⏳ wWAZIR / bWAZIR
+⏳ He (helium periodic table tile — The Concept™)
+⏳ wFOOL / bFOOL
+⏳ PNG originals folder (MS Paint sigma era)
+
+BABY CHESS TODO:
+⏳ Add wFOAL/bFOAL/wBABY/bBABY/wROOK/bROOK/IMMOBILE svgs to babychess folder
+⏳ Test full game with SVG pieces
+⏳ Babytomic Chess (explosions 💥)
+⏳ Baby Pocket Foal Chess variant
+
+GITHUB REPO TODO:
+⏳ Add PNG originals in /original-ms-paint folder
+⏳ Add license (CC0 recommended — they're just circles)
+⏳ Update repo description from "random svg's" to something better (optional)
+⏳ Add remaining pieces when done
+
+THE CONCEPT™ DEPARTMENT:
+⏳ EMPTYSET (∅)
+⏳ He (helium)
+⏳ ℙ BISHOP (prime distances only)
+⏳ ℙ ROOK (prime distances only)
+⏳ ⟂ COPRIME piece
+⏳ ∩ INTERSECTION piece
+⏳ ALOO PARANTHA 🫓 (do not ask)
+
+DO NOT TODO (retired/concept only):
+❌ Caseoh piece (win condition, not a real piece)
+❌ Stalin piece (retired to forest)
+❌ Parantha Chess (we don't talk about it)
+❌ 10 player nuclear elefunt variant (thermodynamically unstable)
+
+OTHER PROJECTS:
+⏳ Blender — blender blending a blender in blender (next school year)
+⏳ VMs — fix 2 malfunctioning VMs (Windows + Ubuntu)
+⏳ Nonogram — open it at least once
+⏳ Chess variant language / DSL idea
+⏳ New chess website (this time pieces can move)
+
+ALWAYS REMEMBER:
+⚫⚫⚫ The three circle pawn was right all along.
+🐴 The foals will always be baby.
+🦆 DUCKDUCK is legless, yellow, and unbothered.
+👑 IMMOBILE does not move. It does not care.
+============================================
