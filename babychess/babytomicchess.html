@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Babytomic Chess 💥🐴</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;800&family=Nunito:wght@400;600;700&display=swap');
+
+  :root {
+    --light-sq: #f9e4b7;
+    --dark-sq: #c8a96e;
+    --board-border: #8b6914;
+    --bg: #1a0a00;
+    --accent: #ff6b35;
+    --accent2: #ff9f43;
+    --text: #fff8ee;
+    --highlight: rgba(255,200,0,0.6);
+    --valid-move: rgba(100,220,100,0.5);
+    --tour-visited: rgba(150,220,255,0.4);
+    --explosion-color: #ff4500;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    font-family: 'Nunito', sans-serif;
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-image: 
+      radial-gradient(circle at 15% 15%, #3d1500 0%, transparent 40%),
+      radial-gradient(circle at 85% 85%, #2d0a00 0%, transparent 40%);
+  }
+
+  h1 {
+    font-family: 'Baloo 2', cursive;
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--accent), var(--accent2), #ffdd00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+    margin-bottom: 4px;
+    letter-spacing: -1px;
+  }
+
+  .subtitle {
+    font-size: 0.9rem;
+    color: #ff9f43;
+    margin-bottom: 20px;
+    font-style: italic;
+    opacity: 0.8;
+  }
+
+  .game-container {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .board-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+
+  .board {
+    display: grid;
+    grid-template-columns: repeat(6, 80px);
+    grid-template-rows: repeat(6, 80px);
+    border: 4px solid var(--board-border);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(255,100,0,0.3), 0 0 80px rgba(255,60,0,0.1);
+    position: relative;
+  }
+
+  .square {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.15s;
+    font-size: 48px;
+    user-select: none;
+    overflow: hidden;
+  }
+
+  .square.light { background: var(--light-sq); }
+  .square.dark { background: var(--dark-sq); }
+  .square.highlighted { background: var(--highlight) !important; }
+  .square.valid-move::after {
+    content: '';
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    background: var(--valid-move);
+    border-radius: 50%;
+    border: 3px solid rgba(0,180,0,0.5);
+    z-index: 2;
+  }
+  .square.valid-capture::after {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border-radius: 4px;
+    border: 4px solid rgba(255,80,80,0.7);
+    z-index: 2;
+  }
+  .square.tour-visited { 
+    background: var(--tour-visited) !important; 
+  }
+  .square.royal-square {
+    background: repeating-linear-gradient(
+      45deg,
+      #ffd700 0px, #ffd700 4px,
+      #fff8ee 4px, #fff8ee 8px
+    ) !important;
+    cursor: not-allowed;
+  }
+
+  .square.explosion-zone {
+    animation: explodeZone 0.6s forwards;
+  }
+
+  .piece {
+    font-size: 42px;
+    line-height: 1;
+    position: relative;
+    z-index: 1;
+    transition: transform 0.1s;
+  }
+
+  .piece:hover { transform: scale(1.1); }
+
+  /* Crying then exploding */
+  @keyframes cryThenExplode {
+    0% { transform: scale(1) rotate(0deg); opacity: 1; }
+    20% { transform: scale(1.3) rotate(-8deg); opacity: 1; }
+    40% { transform: scale(0.8) rotate(8deg); opacity: 1; }
+    60% { transform: scale(1.5) rotate(0deg); opacity: 0.8; filter: brightness(3) hue-rotate(30deg); }
+    80% { transform: scale(2) rotate(15deg); opacity: 0.3; filter: brightness(5); }
+    100% { transform: scale(0) rotate(45deg); opacity: 0; }
+  }
+
+  @keyframes explodeZone {
+    0% { filter: brightness(1); }
+    30% { filter: brightness(4) saturate(3); background: rgba(255,100,0,0.8) !important; }
+    60% { filter: brightness(2); background: rgba(255,50,0,0.4) !important; }
+    100% { filter: brightness(1); }
+  }
+
+  @keyframes tear {
+    0% { opacity: 1; transform: translateY(0) scale(1); }
+    100% { opacity: 0; transform: translateY(25px) scale(0.5); }
+  }
+
+  @keyframes sparkle {
+    0% { transform: translate(0,0) scale(1); opacity: 1; }
+    100% { transform: translate(var(--dx), var(--dy)) scale(0); opacity: 0; }
+  }
+
+  @keyframes foalAppear {
+    0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+    60% { transform: scale(1.3) rotate(10deg); opacity: 1; }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  }
+
+  @keyiego { /* royal protection flash */
+    0%, 100% { box-shadow: none; }
+    50% { box-shadow: inset 0 0 20px rgba(255,215,0,0.8); }
+  }
+
+  .crying { animation: cryThenExplode 0.9s forwards; }
+  .tear {
+    position: absolute;
+    font-size: 14px;
+    pointer-events: none;
+    animation: tear 0.6s forwards;
+    z-index: 10;
+  }
+  .spark {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--explosion-color);
+    pointer-events: none;
+    animation: sparkle 0.7s forwards;
+    z-index: 10;
+  }
+  .foal-appear {
+    animation: foalAppear 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+  .royal-protected {
+    animation: iego 0.4s ease-in-out 3;
+  }
+
+  /* Side panel */
+  .panel {
+    background: rgba(255,255,255,0.05);
+    border-radius: 16px;
+    padding: 20px;
+    width: 220px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,150,50,0.2);
+    backdrop-filter: blur(10px);
+  }
+
+  .panel h2 {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.2rem;
+    color: var(--accent2);
+    margin-bottom: 12px;
+    border-bottom: 1px solid rgba(255,150,50,0.3);
+    padding-bottom: 8px;
+  }
+
+  .player-section {
+    margin-bottom: 16px;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    transition: all 0.3s;
+  }
+
+  .player-section.active {
+    border-color: var(--accent);
+    background: rgba(255,107,53,0.1);
+  }
+
+  .player-name {
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .foal-count {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 6px;
+  }
+
+  .tour-progress {
+    background: rgba(255,255,255,0.1);
+    border-radius: 20px;
+    height: 8px;
+    overflow: hidden;
+    margin-top: 4px;
+  }
+
+  .tour-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2), #ffdd00);
+    border-radius: 20px;
+    transition: width 0.3s;
+  }
+
+  .pocket {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+    padding: 8px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 8px;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.7);
+  }
+
+  .pocket-piece {
+    font-size: 28px;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  .pocket-piece:hover { transform: scale(1.2); }
+  .pocket-piece.selected { filter: drop-shadow(0 0 6px var(--accent)); transform: scale(1.2); }
+  .pocket-piece.used { opacity: 0.3; cursor: not-allowed; }
+
+  .status-box {
+    background: rgba(255,107,53,0.1);
+    border: 1px solid rgba(255,107,53,0.4);
+    border-radius: 12px;
+    padding: 12px;
+    margin-top: 16px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.85rem;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent2);
+  }
+
+  .btn {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-family: 'Baloo 2', cursive;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+    transition: transform 0.1s, box-shadow 0.1s;
+    box-shadow: 0 4px 12px rgba(255,107,53,0.3);
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(255,107,53,0.5);
+  }
+
+  .btn.secondary {
+    background: rgba(255,255,255,0.1);
+    box-shadow: none;
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+
+  .legend {
+    margin-top: 16px;
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.5);
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 4px;
+  }
+
+  .legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .coord {
+    position: absolute;
+    font-size: 9px;
+    color: rgba(100,60,0,0.5);
+    font-weight: 600;
+    z-index: 0;
+  }
+  .coord.file { bottom: 2px; right: 4px; }
+  .coord.rank { top: 2px; left: 3px; }
+
+  /* Win screen */
+  .win-screen {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .win-screen.show { display: flex; }
+
+  .win-card {
+    background: linear-gradient(135deg, #1a0800, #2d1200);
+    border: 2px solid var(--accent);
+    border-radius: 24px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(255,100,0,0.4);
+    animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  @keyframes popIn {
+    from { transform: scale(0.5); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .win-emoji { font-size: 4rem; margin-bottom: 12px; }
+
+  .win-title {
+    font-family: 'Baloo 2', cursive;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--accent2);
+    margin-bottom: 8px;
+  }
+
+  .win-subtitle { color: rgba(255,255,255,0.6); margin-bottom: 24px; font-size: 0.9rem; }
+
+  /* Explosion overlay */
+  .explosion-overlay {
+    position: absolute;
+    pointer-events: none;
+    font-size: 40px;
+    z-index: 20;
+    animation: bigBoom 0.7s forwards;
+  }
+
+  @keyframes bigBoom {
+    0% { transform: scale(0); opacity: 1; }
+    50% { transform: scale(2.5); opacity: 1; }
+    100% { transform: scale(4); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<h1>💥 Babytomic Chess 💥</h1>
+<p class="subtitle">the foals will always be baby • captures explode • royals summon bodyguards</p>
+
+<div class="game-container">
+  <div class="board-wrap">
+    <div class="board" id="board"></div>
+    <div style="margin-top:12px; font-size:0.75rem; color:rgba(255,255,255,0.4); text-align:center;">
+      Click piece to select • Click dot to move • Captures explode adjacent pieces 💥
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>⚪ White</h2>
+    <div class="player-section" id="white-section">
+      <div class="player-name">🐴 Foals: <span id="white-foal-count">2</span></div>
+      <div class="foal-count">Tour: <span id="white-tour-count">0</span>/32</div>
+      <div class="tour-progress"><div class="tour-bar" id="white-tour-bar" style="width:0%"></div></div>
+      <div class="pocket">
+        🎒 <img src="wFOAL.svg" class="pocket-piece" id="white-pocket" style="width:32px;height:32px;">
+      </div>
+    </div>
+
+    <h2>⚫ Black</h2>
+    <div class="player-section" id="black-section">
+      <div class="player-name">🐴 Foals: <span id="black-foal-count">2</span></div>
+      <div class="foal-count">Tour: <span id="black-tour-count">0</span>/32</div>
+      <div class="tour-progress"><div class="tour-bar" id="black-tour-bar" style="width:0%"></div></div>
+      <div class="pocket">
+        🎒 <img src="bFOAL.svg" class="pocket-piece" id="black-pocket" style="width:32px;height:32px;">
+      </div>
+    </div>
+
+    <div class="status-box" id="status">White's turn! 🐴</div>
+
+    <button class="btn" onclick="resetGame()">🔄 New Game</button>
+    <button class="btn secondary" onclick="toggleTour()">👁️ Tour Squares</button>
+
+    <div class="legend">
+      <div class="legend-item">
+        <div class="legend-dot" style="background:var(--highlight)"></div>
+        Selected
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:var(--valid-move)"></div>
+        Valid move
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:rgba(255,80,80,0.6)"></div>
+        Capture → 💥
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:var(--tour-visited)"></div>
+        Tour visited
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:repeating-linear-gradient(45deg,#ffd700 0px,#ffd700 3px,#fff 3px,#fff 6px)"></div>
+        Royal (spawns foals if threatened)
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="win-screen" id="win-screen">
+  <div class="win-card">
+    <div class="win-emoji" id="win-emoji">💥</div>
+    <div class="win-title" id="win-title">White wins!</div>
+    <div class="win-subtitle" id="win-subtitle">The foals completed their tour!</div>
+    <button class="btn" onclick="resetGame(); document.getElementById('win-screen').classList.remove('show')">
+      🔄 Play Again
+    </button>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// BABYTOMIC CHESS ENGINE
+// ============================================================
+
+const EMPTY = null;
+const FILES = ['a','b','c','d','e','f'];
+const RANKS = ['6','5','4','3','2','1'];
+
+const KING = 'king';
+const QUEEN = 'queen';
+const ROOK = 'rook';
+const FOAL = 'foal';
+const PAWN = 'pawn';
+
+function getPieceImg(color, type) {
+  const map = {
+    white: { king:'IMMOBILE', queen:'IMMOBILE', rook:'wROOK', foal:'wFOAL', pawn:'wBABY' },
+    black: { king:'IMMOBILE', queen:'IMMOBILE', rook:'bROOK', foal:'bFOAL', pawn:'bBABY' },
+  };
+  return map[color][type] + '.svg';
+}
+
+let board = [];
+let currentTurn = 'white';
+let selected = null;
+let validMoves = [];
+let showTour = false;
+let tourVisited = { white: new Set(), black: new Set() };
+let pocket = { white: true, black: true };
+let foalCount = { white: 2, black: 2 };
+let royalSquares = new Set();
+let isAnimating = false;
+
+function initBoard() {
+  board = Array(6).fill(null).map(() => Array(6).fill(null));
+
+  board[0][0] = { color: 'black', type: ROOK };
+  board[0][1] = { color: 'black', type: FOAL };
+  board[0][2] = { color: 'black', type: QUEEN };
+  board[0][3] = { color: 'black', type: KING };
+  board[0][4] = { color: 'black', type: FOAL };
+  board[0][5] = { color: 'black', type: ROOK };
+
+  for (let c = 0; c < 6; c++) board[1][c] = { color: 'black', type: PAWN };
+  for (let c = 0; c < 6; c++) board[4][c] = { color: 'white', type: PAWN };
+
+  board[5][0] = { color: 'white', type: ROOK };
+  board[5][1] = { color: 'white', type: FOAL };
+  board[5][2] = { color: 'white', type: QUEEN };
+  board[5][3] = { color: 'white', type: KING };
+  board[5][4] = { color: 'white', type: FOAL };
+  board[5][5] = { color: 'white', type: ROOK };
+
+  updateRoyalSquares();
+  tourVisited = { white: new Set(), black: new Set() };
+  pocket = { white: true, black: true };
+  foalCount = { white: 2, black: 2 };
+  currentTurn = 'white';
+  selected = null;
+  validMoves = [];
+  isAnimating = false;
+}
+
+function updateRoyalSquares() {
+  royalSquares = new Set();
+  for (let r = 0; r < 6; r++)
+    for (let c = 0; c < 6; c++) {
+      const p = board[r][c];
+      if (p && (p.type === KING || p.type === QUEEN)) royalSquares.add(`${r},${c}`);
+    }
+}
+
+function isRoyal(r, c) { return royalSquares.has(`${r},${c}`); }
+
+function getXiangqiMoves(r, c, color) {
+  const moves = [];
+  const knightMoves = [
+    { dest: [r-2, c-1], block: [r-1, c] },
+    { dest: [r-2, c+1], block: [r-1, c] },
+    { dest: [r+2, c-1], block: [r+1, c] },
+    { dest: [r+2, c+1], block: [r+1, c] },
+    { dest: [r-1, c-2], block: [r, c-1] },
+    { dest: [r+1, c-2], block: [r, c-1] },
+    { dest: [r-1, c+2], block: [r, c+1] },
+    { dest: [r+1, c+2], block: [r, c+1] },
+  ];
+
+  for (const km of knightMoves) {
+    const [dr, dc] = km.dest;
+    const [br, bc] = km.block;
+    if (dr < 0 || dr >= 6 || dc < 0 || dc >= 6) continue;
+    if (br < 0 || br >= 6 || bc < 0 || bc >= 6) continue;
+    if (board[br][bc] !== null) continue;
+    const target = board[dr][dc];
+    if (target && (target.type === KING || target.type === QUEEN)) continue;
+    if (target === null || target.color !== color) {
+      moves.push({ row: dr, col: dc, capture: target !== null });
+    }
+  }
+  return moves;
+}
+
+function getRookMoves(r, c, color) {
+  const moves = [];
+  const dirs = [[-1,0],[1,0],[0,-1],[0,1]];
+  for (const [dr, dc] of dirs) {
+    let nr = r + dr, nc = c + dc;
+    while (nr >= 0 && nr < 6 && nc >= 0 && nc < 6) {
+      const target = board[nr][nc];
+      if (target === null) {
+        moves.push({ row: nr, col: nc, capture: false });
+      } else {
+        if (target.color !== color && target.type !== KING && target.type !== QUEEN) {
+          moves.push({ row: nr, col: nc, capture: true });
+        }
+        break;
+      }
+      nr += dr; nc += dc;
+    }
+  }
+  return moves;
+}
+
+function getPawnMoves(r, c, color) {
+  const moves = [];
+  const dir = color === 'white' ? -1 : 1;
+  const nr = r + dir;
+  if (nr >= 0 && nr < 6 && board[nr][c] === null)
+    moves.push({ row: nr, col: c, capture: false });
+  for (const dc of [-1, 1]) {
+    const nc = c + dc;
+    if (nr >= 0 && nr < 6 && nc >= 0 && nc < 6) {
+      const target = board[nr][nc];
+      if (target && target.color !== color && target.type !== KING && target.type !== QUEEN)
+        moves.push({ row: nr, col: nc, capture: true });
+    }
+  }
+  return moves;
+}
+
+function getValidMoves(r, c) {
+  const piece = board[r][c];
+  if (!piece) return [];
+  switch (piece.type) {
+    case FOAL: return getXiangqiMoves(r, c, piece.color);
+    case ROOK: return getRookMoves(r, c, piece.color);
+    case PAWN: return getPawnMoves(r, c, piece.color);
+    case KING: case QUEEN: return [];
+    default: return [];
+  }
+}
+
+function getPocketDropMoves(color) {
+  const moves = [];
+  for (let r = 0; r < 6; r++)
+    for (let c = 0; c < 6; c++)
+      if (board[r][c] === null && !isRoyal(r, c))
+        moves.push({ row: r, col: c, capture: false });
+  return moves;
+}
+
+function markTourSquare(r, c, color) {
+  if (!isRoyal(r, c)) tourVisited[color].add(`${r},${c}`);
+}
+
+// Get adjacent squares (3x3 minus center)
+function getAdjacentSquares(r, c) {
+  const adj = [];
+  for (let dr = -1; dr <= 1; dr++)
+    for (let dc = -1; dc <= 1; dc++) {
+      if (dr === 0 && dc === 0) continue;
+      const nr = r + dr, nc = c + dc;
+      if (nr >= 0 && nr < 6 && nc >= 0 && nc < 6) adj.push([nr, nc]);
+    }
+  return adj;
+}
+
+function spawnTears(squareEl) {
+  for (let i = 0; i < 3; i++) {
+    const tear = document.createElement('span');
+    tear.className = 'tear';
+    tear.textContent = '💧';
+    tear.style.left = (15 + Math.random() * 50) + 'px';
+    tear.style.top = (10 + Math.random() * 20) + 'px';
+    squareEl.appendChild(tear);
+    setTimeout(() => tear.remove(), 700);
+  }
+}
+
+function spawnSparks(squareEl) {
+  for (let i = 0; i < 8; i++) {
+    const spark = document.createElement('div');
+    spark.className = 'spark';
+    const angle = (i / 8) * Math.PI * 2;
+    const dist = 30 + Math.random() * 20;
+    spark.style.setProperty('--dx', Math.cos(angle) * dist + 'px');
+    spark.style.setProperty('--dy', Math.sin(angle) * dist + 'px');
+    spark.style.left = '36px';
+    spark.style.top = '36px';
+    spark.style.background = ['#ff4500','#ff8c00','#ffdd00','#ff6b35'][Math.floor(Math.random()*4)];
+    squareEl.appendChild(spark);
+    setTimeout(() => spark.remove(), 800);
+  }
+}
+
+function showBigExplosion(r, c) {
+  const boardEl = document.getElementById('board');
+  const overlay = document.createElement('div');
+  overlay.className = 'explosion-overlay';
+  overlay.textContent = '💥';
+  overlay.style.left = (c * 80 + 20) + 'px';
+  overlay.style.top = (r * 80 + 20) + 'px';
+  boardEl.style.position = 'relative';
+  boardEl.appendChild(overlay);
+  setTimeout(() => overlay.remove(), 800);
+}
+
+// Spawn foal bodyguards around royal
+function spawnRoyalBodyguards(royalR, royalC, color) {
+  const adj = getAdjacentSquares(royalR, royalC);
+  const newFoalSquares = [];
+  for (const [nr, nc] of adj) {
+    if (board[nr][nc] === null) {
+      board[nr][nc] = { color, type: FOAL };
+      foalCount[color]++;
+      markTourSquare(nr, nc, color);
+      newFoalSquares.push([nr, nc]);
+    }
+  }
+  return newFoalSquares;
+}
+
+// Handle explosion after capture at (captureR, captureC)
+async function handleExplosion(captureR, captureC, captureColor) {
+  const adj = getAdjacentSquares(captureR, captureC);
+  showBigExplosion(captureR, captureC);
+
+  const royalsThreatenedByColor = {};
+
+  for (const [nr, nc] of adj) {
+    const target = board[nr][nc];
+    if (!target) continue;
+
+    const squareEl = document.querySelector(`[data-r="${nr}"][data-c="${nc}"]`);
+
+    if (target.type === KING || target.type === QUEEN) {
+      // Royal gets bodyguards!
+      squareEl?.classList.add('royal-protected');
+      setTimeout(() => squareEl?.classList.remove('royal-protected'), 1200);
+
+      // Store which color royal was threatened
+      if (!royalsThreatenedByColor[target.color]) {
+        royalsThreatenedByColor[target.color] = [[nr, nc]];
+      } else {
+        royalsThreatenedByColor[target.color].push([nr, nc]);
+      }
+    } else {
+      // Regular piece gets destroyed
+      if (squareEl) {
+        const pieceEl = squareEl.querySelector('img');
+        if (pieceEl) {
+          spawnTears(squareEl);
+          spawnSparks(squareEl);
+          squareEl.classList.add('explosion-zone');
+          pieceEl.classList.add('crying');
+        }
+      }
+      if (target.type === FOAL) foalCount[target.color]--;
+      setTimeout(() => { board[nr][nc] = null; }, 850);
+    }
+  }
+
+  // Spawn bodyguards for threatened royals
+  setTimeout(() => {
+    for (const [color, royalList] of Object.entries(royalsThreatenedByColor)) {
+      for (const [rr, rc] of royalList) {
+        const newFoals = spawnRoyalBodyguards(rr, rc, color);
+        // Animate new foals appearing
+        setTimeout(() => {
+          for (const [fr, fc] of newFoals) {
+            const sq = document.querySelector(`[data-r="${fr}"][data-c="${fc}"]`);
+            if (sq) {
+              const img = sq.querySelector('img');
+              if (img) img.classList.add('foal-appear');
+            }
+          }
+          renderBoard();
+          updateStatus();
+        }, 100);
+      }
+    }
+  }, 500);
+}
+
+async function handleSquareClick(r, c) {
+  if (isAnimating) return;
+  const piece = board[r][c];
+  const squareEl = document.querySelector(`[data-r="${r}"][data-c="${c}"]`);
+
+  // Pocket foal drop
+  if (selected && selected.pocket) {
+    const dropColor = selected.pocket;
+    if (dropColor === currentTurn && pocket[dropColor]) {
+      const isValid = validMoves.some(m => m.row === r && m.col === c);
+      if (isValid) {
+        board[r][c] = { color: dropColor, type: FOAL };
+        pocket[dropColor] = false;
+        foalCount[dropColor]++;
+        markTourSquare(r, c, dropColor);
+        selected = null; validMoves = [];
+        endTurn();
+        return;
+      }
+    }
+    selected = null; validMoves = [];
+    renderBoard();
+    return;
+  }
+
+  // Execute move
+  if (selected) {
+    const isValid = validMoves.some(m => m.row === r && m.col === c);
+    if (isValid) {
+      const movingPiece = board[selected.row][selected.col];
+      const targetPiece = board[r][c];
+      isAnimating = true;
+
+      if (targetPiece) {
+        // Capture with cry + explosion
+        if (squareEl) {
+          const pieceEl = squareEl.querySelector('img');
+          if (pieceEl) {
+            spawnTears(squareEl);
+            pieceEl.classList.add('crying');
+          }
+        }
+        if (targetPiece.type === FOAL) foalCount[targetPiece.color]--;
+
+        // Move the piece
+        board[r][c] = movingPiece;
+        board[selected.row][selected.col] = null;
+        if (movingPiece.type === FOAL) markTourSquare(r, c, movingPiece.color);
+
+        updateRoyalSquares();
+        selected = null; validMoves = [];
+        renderBoard();
+
+        // Explosion after short delay
+        setTimeout(async () => {
+          await handleExplosion(r, c, movingPiece.color);
+          setTimeout(() => {
+            updateRoyalSquares();
+            isAnimating = false;
+            if (!checkWin()) endTurn();
+          }, 1000);
+        }, 400);
+
+      } else {
+        // Regular move
+        board[r][c] = movingPiece;
+        board[selected.row][selected.col] = null;
+        if (movingPiece.type === FOAL) markTourSquare(r, c, movingPiece.color);
+        updateRoyalSquares();
+        selected = null; validMoves = [];
+        isAnimating = false;
+        if (!checkWin()) endTurn();
+      }
+      return;
+    }
+
+    selected = null; validMoves = [];
+  }
+
+  // Select piece
+  if (piece && piece.color === currentTurn) {
+    if (piece.type === KING || piece.type === QUEEN) {
+      setStatus(`The ${piece.type === KING ? 'Young Prince' : 'Young Princess'} is too spoiled! 👑`);
+      return;
+    }
+    selected = { row: r, col: c };
+    validMoves = getValidMoves(r, c);
+    renderBoard();
+  }
+}
+
+function checkWin() {
+  for (const color of ['white', 'black']) {
+    if (tourVisited[color].size >= 32) {
+      showWin(color, 'tour');
+      return true;
+    }
+  }
+  for (const color of ['white', 'black']) {
+    if (foalCount[color] === 0 && !pocket[color]) {
+      const enemy = color === 'white' ? 'black' : 'white';
+      showWin(enemy, 'capture');
+      return true;
+    }
+  }
+  return false;
+}
+
+function showWin(color, reason) {
+  const screen = document.getElementById('win-screen');
+  document.getElementById('win-emoji').textContent = reason === 'tour' ? '🏆' : '💥';
+  document.getElementById('win-title').textContent = `${color.charAt(0).toUpperCase() + color.slice(1)} wins!`;
+  document.getElementById('win-subtitle').textContent = reason === 'tour'
+    ? '🐴 Foals completed the tour!'
+    : '💥 All enemy foals were obliterated!';
+  screen.classList.add('show');
+}
+
+function endTurn() {
+  currentTurn = currentTurn === 'white' ? 'black' : 'white';
+  updateStatus();
+  renderBoard();
+}
+
+function setStatus(msg) {
+  document.getElementById('status').innerHTML = msg;
+}
+
+function updateStatus() {
+  const color = currentTurn.charAt(0).toUpperCase() + currentTurn.slice(1);
+  setStatus(`${currentTurn === 'white' ? '⚪' : '⚫'} ${color}'s turn! 🐴`);
+  document.getElementById('white-section').classList.toggle('active', currentTurn === 'white');
+  document.getElementById('black-section').classList.toggle('active', currentTurn === 'black');
+
+  const wt = tourVisited.white.size;
+  const bt = tourVisited.black.size;
+  document.getElementById('white-tour-count').textContent = wt;
+  document.getElementById('black-tour-count').textContent = bt;
+  document.getElementById('white-tour-bar').style.width = (wt/32*100) + '%';
+  document.getElementById('black-tour-bar').style.width = (bt/32*100) + '%';
+  document.getElementById('white-foal-count').textContent = foalCount.white;
+  document.getElementById('black-foal-count').textContent = foalCount.black;
+
+  const wp = document.getElementById('white-pocket');
+  const bp = document.getElementById('black-pocket');
+  wp.className = 'pocket-piece' + (!pocket.white ? ' used' : '') + (selected?.pocket === 'white' ? ' selected' : '');
+  bp.className = 'pocket-piece' + (!pocket.black ? ' used' : '') + (selected?.pocket === 'black' ? ' selected' : '');
+}
+
+function toggleTour() {
+  showTour = !showTour;
+  renderBoard();
+}
+
+function renderBoard() {
+  const boardEl = document.getElementById('board');
+  // Preserve any overlays
+  const overlays = boardEl.querySelectorAll('.explosion-overlay');
+  boardEl.innerHTML = '';
+  overlays.forEach(o => boardEl.appendChild(o));
+
+  for (let r = 0; r < 6; r++) {
+    for (let c = 0; c < 6; c++) {
+      const sq = document.createElement('div');
+      const isLight = (r + c) % 2 === 0;
+      sq.className = 'square ' + (isLight ? 'light' : 'dark');
+      sq.dataset.r = r;
+      sq.dataset.c = c;
+
+      if (c === 0) {
+        const rank = document.createElement('span');
+        rank.className = 'coord rank';
+        rank.textContent = RANKS[r];
+        sq.appendChild(rank);
+      }
+      if (r === 5) {
+        const file = document.createElement('span');
+        file.className = 'coord file';
+        file.textContent = FILES[c];
+        sq.appendChild(file);
+      }
+
+      if (isRoyal(r, c)) sq.classList.add('royal-square');
+      if (showTour && tourVisited[currentTurn].has(`${r},${c}`)) sq.classList.add('tour-visited');
+      if (selected && !selected.pocket && selected.row === r && selected.col === c) sq.classList.add('highlighted');
+
+      const isValid = validMoves.some(m => m.row === r && m.col === c);
+      if (isValid) {
+        const move = validMoves.find(m => m.row === r && m.col === c);
+        sq.classList.add(move.capture ? 'valid-capture' : 'valid-move');
+      }
+
+      const piece = board[r][c];
+      if (piece) {
+        const pieceEl = document.createElement('img');
+        pieceEl.className = 'piece ' + piece.color;
+        pieceEl.src = getPieceImg(piece.color, piece.type);
+        pieceEl.alt = piece.color + ' ' + piece.type;
+        pieceEl.style.width = '64px';
+        pieceEl.style.height = '64px';
+        pieceEl.style.objectFit = 'contain';
+        pieceEl.style.pointerEvents = 'none';
+        sq.appendChild(pieceEl);
+      }
+
+      sq.addEventListener('click', () => handleSquareClick(r, c));
+      boardEl.appendChild(sq);
+    }
+  }
+
+  updateStatus();
+}
+
+function resetGame() {
+  initBoard();
+  renderBoard();
+  document.getElementById('win-screen').classList.remove('show');
+  setStatus("White's turn! 🐴");
+}
+
+document.getElementById('white-pocket').addEventListener('click', () => {
+  if ('white' !== currentTurn || isAnimating) return;
+  if (!pocket.white) return;
+  selected = selected?.pocket === 'white' ? null : { pocket: 'white' };
+  validMoves = selected ? getPocketDropMoves('white') : [];
+  renderBoard();
+});
+
+document.getElementById('black-pocket').addEventListener('click', () => {
+  if ('black' !== currentTurn || isAnimating) return;
+  if (!pocket.black) return;
+  selected = selected?.pocket === 'black' ? null : { pocket: 'black' };
+  validMoves = selected ? getPocketDropMoves('black') : [];
+  renderBoard();
+});
+
+initBoard();
+renderBoard();
+</script>
+</body>
+</html>
