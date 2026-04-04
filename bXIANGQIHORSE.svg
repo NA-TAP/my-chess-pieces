@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="180"
+   height="180"
+   viewBox="0 0 180 180"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
+   sodipodi:docname="bXIANGQIHORSE.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="true"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="px"
+     inkscape:zoom="4.6055556"
+     inkscape:cx="90.217128"
+     inkscape:cy="81.314836"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1">
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect2"
+       is_visible="true"
+       lpeversion="1.3"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false"
+       uniform="false" />
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect1"
+       is_visible="true"
+       lpeversion="1.3"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false"
+       uniform="false" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:#000000;stroke:#ffffff;stroke-width:3"
+       d="m 70.639324,70.422195 c -3.329312,0.289506 -10.494571,1.302775 -17.370391,1.519898 -6.87582,0.217123 -13.461937,-0.361876 -16.899816,-1.121837 -3.43788,-0.759961 -3.72738,-1.700835 -3.401677,-3.148382 0.325703,-1.447546 1.266577,-3.401669 3.184579,-5.392039 1.918003,-1.99037 4.812999,-4.016868 7.744271,-5.609159 2.931272,-1.592292 5.898644,-2.750291 15.054406,-3.220734 9.155763,-0.470444 24.499244,-0.253319 36.043349,0.759967 11.544105,1.013287 19.288225,2.822661 28.262995,8.214789 8.97477,5.392128 19.17963,14.366615 24.13741,21.49574 4.95778,7.129125 4.66828,12.412493 3.54642,19.975922 -1.12185,7.56343 -3.07597,17.40641 -5.31966,24.3184 -2.2437,6.91198 -4.77682,10.8926 -14.04115,12.44868 -9.26434,1.55609 -25.25919,0.68759 -38.829869,0.43427 -13.570679,-0.25331 -24.716415,0.10856 -28.045728,-5.03016 -3.329313,-5.13872 1.158023,-15.77805 4.053078,-21.93004 2.895054,-6.15199 4.197795,-7.8166 4.595876,-10.96504 0.398081,-3.14844 -0.108533,-7.780337 -0.325666,-13.389619 -0.217134,-5.609281 -0.144761,-12.195259 0.144751,-15.705586 0.289511,-3.510326 0.796135,-3.944575 -2.533178,-3.65507 z"
+       id="path1"
+       inkscape:path-effect="#path-effect1"
+       inkscape:original-d="m 74.475271,69.698432 c -7.165259,1.013269 -14.330518,2.026538 -21.495778,3.039807 -6.58638,-0.579023 -13.172497,-1.158022 -19.758745,-1.737033 -0.289511,-0.940911 -0.579011,-1.881785 -0.868516,-2.822678 0.940911,-1.9542 1.881785,-3.908323 2.822678,-5.862485 2.895112,-2.026578 5.790108,-4.053076 8.685162,-6.079614 2.96749,-1.158044 5.934862,-2.316043 8.902292,-3.474065 15.344095,0.217134 30.687576,0.434258 46.031363,0.651388 7.744423,1.809445 15.488543,3.618817 23.232813,5.428226 10.20527,8.974848 20.41013,17.949337 30.6152,26.924005 -0.28951,5.28358 -0.57901,10.566948 -0.86852,15.850427 -1.9542,9.84338 -3.90832,19.68636 -5.86248,29.52955 -2.53323,3.98078 -5.06635,7.9614 -7.59952,11.9421 -15.9955,-0.86854 -31.99035,-1.73703 -47.985526,-2.60555 -11.146182,0.36189 -22.291918,0.72376 -33.437877,1.08564 4.487334,-10.63932 8.974668,-21.27865 13.462002,-31.91797 1.302774,-1.66466 2.605521,-3.32927 3.908323,-4.99397 -0.506645,-4.63218 -1.013258,-9.264077 -1.519902,-13.896258 0.07238,-6.586382 0.14475,-13.17236 0.217128,-19.758746 0.506645,-0.434267 1.013269,-0.868516 1.519903,-1.302774 z"
+       sodipodi:nodetypes="cccccccccccccccccccc" />
+    <circle
+       id="path2"
+       style="fill:#ffffff;stroke:#ffffff"
+       cx="52.979492"
+       cy="63.835945"
+       r="4.5" />
+    <path
+       style="fill:#000000;stroke:#ffffff;stroke-width:3"
+       d="M 81.85766,62.098914 Z"
+       id="path3" />
+    <circle
+       id="path4"
+       style="fill:#ffffff;stroke:#ffffff"
+       cx="82.074791"
+       cy="60.144753"
+       r="4.5" />
+    <circle
+       id="path5"
+       style="fill:#ffffff;stroke:#ffffff"
+       cx="82.943306"
+       cy="73.172501"
+       r="4.5" />
+    <circle
+       id="path6"
+       style="fill:#ffffff;stroke:#ffffff"
+       cx="88.588661"
+       cy="78.600723"
+       r="4.5" />
+    <circle
+       id="path7"
+       style="fill:#ffffff;stroke:#ffffff"
+       cx="94.016891"
+       cy="79.903496"
+       r="4.5" />
+    <circle
+       id="path8"
+       style="fill:#ffffff;stroke:#ffffff"
+       cx="99.227989"
+       cy="79.903496"
+       r="4.5" />
+    <circle
+       id="path9"
+       style="fill:#ffffff;stroke:#ffffff"
+       cx="105.52473"
+       cy="77.080818"
+       r="4.5" />
+    <circle
+       id="path10"
+       style="fill:#ffffff;stroke:#ffffff"
+       cx="110.08444"
+       cy="71.86972"
+       r="4.5" />
+    <circle
+       id="path11"
+       style="fill:#ffffff;stroke:#ffffff"
+       cx="112.68999"
+       cy="67.74427"
+       r="4.5" />
+    <path
+       d="m 28.468946,94.01448 -1.083334,11.62501 h 18.29168 L 47.010626,91.472811 H 21.385607 v -3.041669 h 29.291689 l -1.666668,17.208348 h 7.875006 q -0.333334,9.70834 -0.750001,14.91668 -0.375,6.54167 -7.458339,6.54167 -4.29167,0 -8.125006,-0.125 -0.208333,-1.5 -0.583334,-3.58334 4.79167,0.375 8.33334,0.375 4.083336,0 4.41667,-3.83333 0.375,-4.25001 0.583334,-11.25001 H 23.635609 L 25.052276,94.01448 Z M 17.760604,114.8895 h 31.29169 v 3.04166 h -31.29169 z"
+       id="text1"
+       style="font-size:42.6667px;stroke:#ffffff"
+       aria-label="马" />
+  </g>
+</svg>
