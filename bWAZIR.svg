@@ -23,17 +23,29 @@
      inkscape:pagecheckerboard="true"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="px"
-     inkscape:zoom="4.6055556"
-     inkscape:cx="90"
-     inkscape:cy="90"
+     inkscape:zoom="4"
+     inkscape:cx="84.75"
+     inkscape:cy="107.375"
      inkscape:window-width="1920"
-     inkscape:window-height="1009"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
+     inkscape:window-height="974"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1" />
   <defs
      id="defs1">
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect11"
+       is_visible="true"
+       lpeversion="1.3"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false"
+       uniform="false" />
     <inkscape:path-effect
        effect="bspline"
        id="path-effect2"
@@ -58,18 +70,40 @@
        apply_with_weight="true"
        only_selected="false"
        uniform="false" />
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect2-2"
+       is_visible="true"
+       lpeversion="1.3"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false"
+       uniform="false" />
   </defs>
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
+    <circle
+       style="fill:#000000;stroke:#ffffff;stroke-width:3"
+       id="path1"
+       cx="93.319664"
+       cy="83.285889"
+       r="61.664654" />
     <path
        style="fill:#000000;stroke:#ffffff;stroke-width:3"
+       d="m 60.144752,135.48854 -26.706875,24.75271 110.952953,-0.21713 -19.32449,-22.79855 -13.24487,6.07962 -18.45597,2.60554 -18.890229,-3.47406 z"
+       id="path9" />
+    <path
+       style="fill:#000000;stroke:#ffffff;stroke-width:5.57902911;stroke-dasharray:none"
        d="M 89.891435,35.392039 C 84.535585,50.156816 79.179842,64.921296 68.576493,74.258033 57.973144,83.594771 42.12304,87.503016 26.272618,91.411339 c 15.126658,6.731004 30.253018,13.461871 40.603042,22.979551 10.350023,9.51768 15.922892,21.82141 21.495872,34.12539 4.921593,-11.86972 9.84309,-23.73921 19.831228,-32.49692 9.98813,-8.75771 25.04212,-14.40295 40.0964,-20.048311 C 133.46201,91.121833 118.62515,86.272715 108.89033,76.17601 99.155519,66.079306 94.523523,50.735827 89.891435,35.392039 Z"
-       id="path1"
-       inkscape:path-effect="#path-effect2"
+       id="path10"
+       inkscape:path-effect="#path-effect11"
        inkscape:original-d="m 89.891435,35.392039 c 0,0 -10.711593,29.529257 -16.067551,44.29433 -15.85074,3.908402 -47.551266,11.72497 -47.551266,11.72497 0,0 30.25302,13.461871 45.379975,20.193011 5.573089,12.30422 16.718939,36.91193 16.718939,36.91193 0,0 9.84309,-23.73921 14.764778,-35.60916 15.05458,-5.64547 45.16285,-16.936071 45.16285,-16.936071 0,0 -29.67401,-9.698334 -44.51146,-14.547647 C 99.155518,66.079306 89.891435,35.392039 89.891435,35.392039 Z"
        sodipodi:nodetypes="ccccccccc"
-       transform="translate(0,-6)" />
+       transform="matrix(0.53772797,0,0,0.53772797,47.016467,34.261817)" />
   </g>
 </svg>
