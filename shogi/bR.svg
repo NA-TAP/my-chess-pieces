@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="180"
+   height="180"
+   viewBox="0 0 180 180"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
+   sodipodi:docname="bR.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="true"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="px"
+     showborder="true"
+     inkscape:zoom="4.6055556"
+     inkscape:cx="89.891435"
+     inkscape:cy="90"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1">
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect1"
+       is_visible="true"
+       lpeversion="1" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       d="M 38.695312,22.615234 V 50.064453 H 55.273437 V 22.615234 Z m 42.125,0.216797 v 27.341797 h 8.619141 v 0.107422 h 0.148438 v -0.113281 h 7.810546 V 22.832031 Z M 97.398437,50.167969 V 50.28125 H 89.587891 L 89.513672,64.378906 89.439453,50.28125 H 80.820312 V 50.173828 H 38.667969 l 16.591797,14.65625 H 55.150391 V 121.13281 L 39,135.39844 h 50.771484 l 0.03125,-5.86328 0.04297,-8.3418 0.04297,8.3418 0.03125,5.86914 H 140.69141 L 123.33008,120.06836 V 65.208984 L 140.23047,50.28125 h -16.01563 v -0.113281 z m 26.816403,0 h 16.14453 l -0.1289,0.113281 h 0.56445 V 22.832031 H 124.21484 Z M 39.083984,135.61328 v 26.92383 H 140.48242 v -26.92383 z"
+       style="fill:#000000;stroke-width:3;stroke-dasharray:none;stroke:#ffffff"
+       id="path8" />
+  </g>
+</svg>

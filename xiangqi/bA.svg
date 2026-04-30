@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="180"
+   height="180"
+   viewBox="0 0 180 180"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
+   sodipodi:docname="bFERS.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="true"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="px"
+     inkscape:zoom="4"
+     inkscape:cx="84.75"
+     inkscape:cy="107.375"
+     inkscape:window-width="1920"
+     inkscape:window-height="974"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1">
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect11"
+       is_visible="true"
+       lpeversion="1.3"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false"
+       uniform="false" />
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect2"
+       is_visible="true"
+       lpeversion="1.3"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false"
+       uniform="false" />
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect1"
+       is_visible="true"
+       lpeversion="1.3"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false"
+       uniform="false" />
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect2-2"
+       is_visible="true"
+       lpeversion="1.3"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false"
+       uniform="false" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <circle
+       style="fill:#000000;stroke:#ffffff;stroke-width:3"
+       id="path1"
+       cx="93.319664"
+       cy="83.285889"
+       r="61.664654" />
+    <path
+       style="fill:#000000;stroke:#ffffff;stroke-width:3"
+       d="m 60.144752,135.48854 -26.706875,24.75271 110.952953,-0.21713 -19.32449,-22.79855 -13.24487,6.07962 -18.45597,2.60554 -18.890229,-3.47406 z"
+       id="path9" />
+    <path
+       style="fill:#000000;stroke:#ffffff;stroke-width:5.57903;stroke-dasharray:none"
+       d="m 87.590203,35.720786 c -3.383366,14.764777 -6.766664,29.529257 -15.945412,38.75641 -9.178748,9.227153 -24.152209,12.916237 -39.125972,16.605396 15.126659,4.758519 30.253018,9.516948 39.726365,18.596288 9.473346,9.07933 13.29293,22.47887 17.11259,35.87867 4.044933,-13.40387 8.089786,-26.80748 17.036866,-35.18165 8.94708,-8.37416 22.79568,-11.718221 36.64456,-15.062346 C 129.18829,90.573921 115.33766,85.834383 106.09597,75.902055 96.854286,65.969728 92.222291,50.845409 87.590203,35.720786 Z"
+       id="path10"
+       inkscape:path-effect="#path-effect11"
+       inkscape:original-d="m 87.590203,35.720786 c 0,0 -6.766664,29.529257 -10.150097,44.29433 -14.974063,3.689233 -44.921287,11.067476 -44.921287,11.067476 0,0 30.253018,9.516948 45.379975,14.275558 3.819736,13.40006 11.45898,40.1994 11.45898,40.1994 0,0 8.089786,-26.80748 12.134796,-40.21162 13.84915,-3.34419 41.54663,-10.032376 41.54663,-10.032376 0,0 -27.70154,-9.479171 -41.55273,-14.218899 C 96.854286,65.969728 87.590203,35.720786 87.590203,35.720786 Z"
+       sodipodi:nodetypes="ccccccccc"
+       transform="matrix(0.38023109,0.38023109,-0.38023109,0.38023109,95.36678,15.437938)" />
+  </g>
+</svg>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="180"
+   height="180"
+   viewBox="0 0 180 180"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="bQ.svg"
+   inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="true"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="px"
+     inkscape:zoom="4.6055556"
+     inkscape:cx="90.217128"
+     inkscape:cy="72.629674"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1">
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect3"
+       is_visible="true"
+       lpeversion="1.3"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false"
+       uniform="false" />
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect1"
+       is_visible="true"
+       lpeversion="1.3"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false"
+       uniform="false" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       id="path1"
+       style="fill:#000000;stroke:#ffffff;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+       d="M 43.642578 21.929688 C 40.964653 28.588312 38.287014 35.247961 36.441406 40.386719 C 34.595799 45.525477 33.581975 49.14392 32.351562 53.341797 C 31.12115 57.539673 29.673543 62.316014 28.587891 72.050781 C 27.502238 81.785548 26.778558 96.476484 28.515625 106.60938 C 30.252692 116.74227 34.450609 122.31569 38.648438 127.88867 C 34.740114 131.00086 30.833269 134.11302 28.119141 138.70898 C 25.405012 143.30495 23.883694 149.38404 23.304688 153.03906 C 22.725681 156.69408 23.087337 157.92585 23.449219 159.15625 C 65.499882 159.51813 107.55031 159.87981 129.55273 159.30078 C 151.55516 158.72175 153.50967 157.20068 153.58203 153.72656 C 153.65439 150.25244 151.84559 144.82459 149.38477 140.77148 C 146.92394 136.71838 143.8114 134.0412 140.69922 131.36328 C 143.16002 127.96159 145.62119 124.55874 147.4668 120.03516 C 149.31241 115.51158 150.543 109.86775 151.1582 101.90625 C 151.7734 93.944748 151.7724 83.666936 151.80859 74.185547 C 151.84478 64.704157 151.91806 56.019817 151.23047 47.587891 C 150.54288 39.155964 149.09596 30.977357 147.64844 22.798828 C 143.30585 30.832604 138.96298 38.866545 135.12695 46.212891 C 131.35426 53.437942 128.0712 59.996872 124.14258 67.234375 L 116.00781 35.019531 L 105.72461 67.355469 C 105.57211 66.566313 105.42107 65.77864 105.27148 64.994141 C 103.64298 56.453561 102.19468 48.202174 100.71094 41.253906 C 99.227193 34.305639 97.707404 28.660981 96.1875 23.015625 C 93.726704 29.746626 91.267374 36.477265 88.878906 42.955078 C 86.490439 49.432891 84.173577 55.656701 81.169922 62.966797 C 81.164424 62.980177 81.157846 62.994425 81.152344 63.007812 L 73.025391 30.826172 L 62.353516 64.382812 C 61.39133 61.955037 60.40882 59.492494 59.457031 57.105469 C 57.177155 51.387684 55.078257 46.104677 52.472656 40.314453 C 49.867055 34.524229 46.754762 28.22643 43.642578 21.929688 z " />
+    <circle
+       style="fill:#000000;stroke:#ffffff;stroke-width:3;stroke-dasharray:none"
+       id="path2"
+       cx="44.694813"
+       cy="18.021713"
+       r="9.119421" />
+    <circle
+       style="fill:#000000;stroke:#ffffff;stroke-width:3;stroke-dasharray:none"
+       id="path2-8"
+       cx="95.619423"
+       cy="19.619423"
+       r="9.119421" />
+    <circle
+       style="fill:#000000;stroke:#ffffff;stroke-width:3;stroke-dasharray:none"
+       id="path2-8-1"
+       cx="145.61942"
+       cy="23.619423"
+       r="9.119421" />
+    <path
+       style="fill:none;stroke:#ffffff;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-dasharray:none"
+       d="m 39.300362,128.32328 100.965018,3.47406"
+       id="path4" />
+  </g>
+</svg>
