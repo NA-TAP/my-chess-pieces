@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="180"
+   height="180"
+   viewBox="0 0 180 180"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
+   sodipodi:docname="great.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="true"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="px"
+     inkscape:zoom="4.6055556"
+     inkscape:cx="90.108564"
+     inkscape:cy="86.743063"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1">
+    <rect
+       x="30.832328"
+       y="26.924005"
+       width="124.19783"
+       height="117.90108"
+       id="rect1" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <circle
+       style="fill:#1b86ff;fill-opacity:1;stroke:#000000;stroke-width:1.01174;stroke-dasharray:none"
+       id="path1"
+       cx="90"
+       cy="90"
+       r="89.494125" />
+    <path
+       d="M 81.660761,106.53033 C 81.09539,93.198548 80.200218,80.0818 78.975244,67.180081 77.750272,54.170848 76.902214,41.000344 76.431071,27.668568 h 27.137859 c -0.47115,13.331776 -1.3192,26.50228 -2.54418,39.511513 -1.224971,12.901719 -2.120141,26.018467 -2.685521,39.350249 z m 8.339237,45.8011 c -3.674918,0 -6.878693,-1.55895 -9.611323,-4.67687 -2.638402,-3.01041 -3.957604,-6.61214 -3.957604,-10.8052 0,-4.19305 1.319202,-7.79478 3.957604,-10.80518 2.73263,-3.11792 5.936405,-4.67687 9.611323,-4.67687 3.674916,0 6.831581,1.55895 9.469981,4.67687 2.732631,3.0104 4.098951,6.61213 4.098951,10.80518 0,4.19306 -1.36632,7.79479 -4.098951,10.8052 -2.6384,3.11792 -5.795065,4.67687 -9.469981,4.67687 z"
+       id="text1"
+       style="font-weight:bold;font-size:96px;font-family:'0xProto Nerd Font';-inkscape-font-specification:'0xProto Nerd Font Bold';white-space:pre;fill:#ffffff;stroke:#000000;stroke-width:1.5727"
+       aria-label="!!&#10;"
+       sodipodi:nodetypes="cccccccssssscscs" />
+  </g>
+</svg>
